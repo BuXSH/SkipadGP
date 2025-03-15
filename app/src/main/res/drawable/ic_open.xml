@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 眼睛轮廓（整体上移 1.5 单位） -->
+    <path
+        android:pathData="M12,6C8,6 5,8.5 5,11s3,5 7,5 7-2.5 7-5 -3-5 -7-5"
+        android:strokeColor="#FF1B1256"
+        android:strokeWidth="1"
+        android:fillColor="#FFFFFF"
+        android:strokeLineCap="round"/>
+
+    <!-- 瞳孔位置保持原样（中心点 y=12.5） -->
+    <path
+        android:pathData="M12,12.5a2,2 0,1 0,0-4 2,2 0,0 0,0 4z"
+        android:fillColor="#FF1B1256"/>
+
+</vector>

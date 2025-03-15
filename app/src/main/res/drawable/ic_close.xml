@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 加长下眼睑弧线 -->
+    <path
+        android:pathData="M5,10 Q12,17 19,10"
+        android:strokeColor="#FF1B1256"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"/>
+
+    <!-- 左侧睫毛（缩短30%） -->
+    <path
+        android:pathData="M7,12 l-2,3"
+        android:strokeColor="#FF1B1256"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"/>
+
+    <!-- 中间睫毛（缩短25%） -->
+    <path
+        android:pathData="M12,14 l0,3"
+        android:strokeColor="#FF1B1256"
+        android:strokeWidth="1.2"  
+        android:strokeLineCap="round"/>
+
+    <!-- 右侧睫毛（缩短30%） -->
+    <path
+        android:pathData="M17,12 l2,3"
+        android:strokeColor="#FF1B1256"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"/>
+
+</vector>

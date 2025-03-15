@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 无障碍服务配置文件：定义服务的行为和权限 -->
+<!-- 服务描述（用户可见）：在系统无障碍设置界面显示的服务说明 -->
+<!-- 监听的事件类型：typeAllMask 表示监听所有类型的事件 -->
+<!-- 无障碍标志位：
+        flagReportViewIds 
+        允许获取控件的唯一视图ID 
+        flagRequestEnhancedWebAccessibility  
+        请求增强的Web可访问性支持，用于更好地访问WebView内容
+-->
+<!-- 反馈类型：feedbackGeneric 表示无特定反馈 -->
+<!-- 事件通知间隔：100ms 表示每100毫秒处理一次事件（平衡性能和实时性） -->
+<!-- 允许检索窗口内容：必须为true才能获取界面控件树 -->
+<!-- 允许执行手势操作：必须为true才能使用GestureDescription API模拟用户的触摸操作 -->
+<!-- 设置界面入口：引导用户跳转到指定Activity配置服务参数（可选） -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/accessibility_service_description"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFlags="flagReportViewIds|flagRequestEnhancedWebAccessibility"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:notificationTimeout="100"
+    android:canRetrieveWindowContent="true"
+    android:canPerformGestures="true"
+    android:settingsActivity="com.example.skipadgp.MainActivity"
+    android:packageNames=""/>

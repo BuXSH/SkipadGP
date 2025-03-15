@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 节点覆盖层容器 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overlay_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">  <!-- 半透明背景 -->
+
+    <!-- 这里不需要预先添加ImageView，将在代码中动态添加 -->
+    <!-- 每个ImageView将通过设置layout_gravity和margins来定位到对应节点位置 -->
+    
+</FrameLayout>

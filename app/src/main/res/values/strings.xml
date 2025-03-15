@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SkipadGP</string>
+    <string name="accessibility_service_label">SkipadGP</string>
+    <string name="accessibility_service_description">SkipadGP无障碍服务</string>
+    <string name="layout_button_description">布局按钮</string>
+    <string name="save_button_description">保存按钮</string>
+</resources>
