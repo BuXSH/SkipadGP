@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
-
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
 /**
  * 主活动类，负责管理应用的主界面和无障碍服务状态
  * 使用Jetpack Compose构建UI，提供无障碍服务的开启状态显示和设置入口
@@ -104,6 +106,7 @@ class MainActivity : ComponentActivity() {
  * @param onOpenAccessibilitySettings Function0<Unit> 打开无障碍设置的回调函数
  * @param modifier Modifier 组件的修饰符
  */
+@OptIn(ExperimentalMaterial3Api::class) //ModalBottomSheet 是 Material3 的实验性 API。解决警告，需要添加 @OptIn 注解
 @Composable
 fun MainContent(
     isAccessibilityServiceEnabled: Boolean,
@@ -165,6 +168,9 @@ fun MainContent(
             containerColor = Color.Transparent,
             contentColor = Color.Black
         )
+        // 底部弹窗状态
+        var showBottomSheet by remember { mutableStateOf(false) }
+        // 无障碍服务按钮
         Button(
             onClick = onOpenAccessibilitySettings,
             modifier = buttonModifier,
@@ -187,6 +193,7 @@ fun MainContent(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // 白名单管理按钮
         Button(
             onClick = {
                 context.startActivity(Intent(context, WhitelistActivity::class.java))
@@ -212,6 +219,7 @@ fun MainContent(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // 悬浮窗按钮
         Button(
             onClick = {
                 // 调试日志
@@ -260,6 +268,7 @@ fun MainContent(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // 控件信息按钮
         Button(
             onClick = {
                 context.startActivity(Intent(context, WidgetInfoActivity::class.java))
@@ -285,8 +294,9 @@ fun MainContent(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // 帮助按钮
         Button(
-            onClick = { },
+            onClick = { showBottomSheet = true },
             modifier = buttonModifier,
             shape = buttonShape,
             colors = buttonColors
@@ -304,6 +314,58 @@ fun MainContent(
                     text = "使用文档，学会如何使用",
                     style = descriptionStyle
                 )
+            }
+        }
+        // 添加底部弹窗
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
+                sheetState = rememberModalBottomSheetState(),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 0.dp) 
+                ) {
+                    Text(
+                        text = "使用说明",
+                        style = androidx.compose.ui.text.TextStyle(
+                            fontSize = 24.sp,
+                            color = Color.Black
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "无障碍服务\n" +
+                            "   • 点击\"无障碍服务\"\n" +
+                            "   • 在系统设置中找到并启用\"SkipadGP\"\n" +
+                            "   • 授予无障碍权限\n" +
+                            "   • 即可自动点击其他应用的开屏广告\n\n" +
+                            "白名单管理\n" +
+                            "   • 选择不需要自动点击开屏广告的应用\n\n" +
+                            "可选功能：针对不能自动点击开屏广告的情况时使用\n\n" +
+                            "开启控件采集\n" +
+                            "   • 首次使用需要授予悬浮窗权限\n" +
+                            "   • 进入需要自动点击开屏广告的应用\n" +
+                            "   • 当开屏广告出现时，点击\"眼睛\"按钮\n" +
+                            "   • 选中开屏广告的\"跳过\"按钮\n" +
+                            "   • 点击\"+\"保存控件信息\n\n" +
+                            "控件信息\n" +
+                            "   • 管理已保存的广告按钮\n" +
+                            "   • 被保存的广告按钮会被自动点击\n" +
+                            "   • 支持导入导出控件配置\n\n" +
+                            "注意事项\n" +
+                            "   • 需要保持应用后台始终存活\n\n" +
+                            "反馈\n" +
+                            "   • GitHub Issues: github.com/BuXSH/SkipadGP/issues\n" +
+                            "   • 邮箱: bzzyl@foxmail.com",
+                        style = androidx.compose.ui.text.TextStyle(
+                            fontSize = 16.sp,
+                            color = Color(0xFF5D5C71)
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
             }
         }
     }
