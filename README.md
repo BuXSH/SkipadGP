@@ -1,6 +1,6 @@
 # SkipadGP
 
-一个基于 Android 无障碍服务的广告自动跳过工具。
+一个基于 Android 无障碍服务的广告自动跳过工具。(Android 练习项目)
 
 ## 功能特性
 
