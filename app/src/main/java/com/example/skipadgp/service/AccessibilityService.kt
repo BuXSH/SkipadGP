@@ -61,8 +61,21 @@ class AccessibilityService : AccessibilityService() {
         serviceInfo = info
 
         // 注册广播接收器
-        val filter = IntentFilter("com.example.skipadgp.REQUEST_NODE_INFO")
-        registerReceiver(nodeInfoRequestReceiver, filter)
+        // val filter = IntentFilter("com.example.skipadgp.REQUEST_NODE_INFO")
+        // registerReceiver(nodeInfoRequestReceiver, filter)
+
+        // Android 12 (API 31) 及以上版本中，注册广播接收器时需要明确指定导出属性
+        try {
+            val filter = IntentFilter("com.example.skipadgp.REQUEST_NODE_INFO")
+            registerReceiver(
+                nodeInfoRequestReceiver,
+                filter,
+                RECEIVER_NOT_EXPORTED
+            )
+            Log.d("AccessibilityService", "广播接收器注册成功")
+        } catch (e: Exception) {
+            Log.e("AccessibilityService", "广播接收器注册失败: ${e.message}")
+        }
     }
 
     // 添加广播接收器
