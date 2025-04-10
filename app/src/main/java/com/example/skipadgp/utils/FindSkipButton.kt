@@ -11,19 +11,12 @@ import com.example.skipadgp.utils.WhitelistManager        // 自定义的白名�
 /**
  * 跳过按钮查找工具类
  * 该类提供了在无障碍服务中查找和识别广告跳过按钮的功能。
- * 包含了正则表达式匹配、节点遍历、白名单检查等核心功能。
  */
 object FindSkipButton {
-
-    /**
-     * 跳过按钮文本匹配模式
-     * 使用正则表达式匹配常见的广告跳过按钮文本格式
-     */
     // 定义正则表达式模式，用于匹配各种跳过按钮的文本格式
     val skipPattern: Pattern = Pattern.compile(
         // 匹配以下格式：跳过、跳过广告、数字跳过、关闭广告、倒计时（如5s、5秒）
         "^(跳过(广告|\\d)?|\\d+跳过|关闭广告|\\d+s|\\d+秒).*$",
-        // "(跳过(广告|\\d)?|\\d+跳过|关闭广告|\\d+s|\\d+秒)",
         // 设置不区分大小写
         Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE
     )
@@ -85,8 +78,9 @@ object FindSkipButton {
     fun getSkipButtonAndPoint(rootNode: AccessibilityNodeInfo?, context: Context): Pair<AccessibilityNodeInfo, android.graphics.Point>? {
         // 先尝试特定应用的模式匹配
         val skipButton = rootNode?.packageName?.toString()?.let { pkg -> 
+            // 首先尝试使用NodePatternManager根据应用包名查找已保存的特定模式节点
             NodePatternManager.findMatchingNode(rootNode, pkg)
-        } ?: findSkipButton(rootNode) ?: return null
+        } ?: findSkipButton(rootNode) ?: return null    // 如果特定模式匹配失败，则使用通用文本匹配方式查找，都失败则返回null
 
         val rect = Rect()
         skipButton.getBoundsInScreen(rect)

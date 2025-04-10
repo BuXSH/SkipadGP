@@ -14,7 +14,6 @@ object NodePatternManager {
     /**
      * 加载节点特征数据
      * 从外部存储中读取预先保存的节点特征JSON文件，并解析成内存中的数据结构
-     * 
      * @param context Android上下文，用于获取外部存储目录
      */
     fun loadPatterns(context: Context) {

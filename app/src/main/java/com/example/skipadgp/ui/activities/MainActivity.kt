@@ -136,7 +136,6 @@ fun MainContent(
         )
         Spacer(modifier = Modifier.height(32.dp))
         // 显示无障碍服务状态
-        // 状态显示
         Text(
             text = if (isAccessibilityServiceEnabled) "无障碍服务已开启" else "无障碍服务未开启",
             style = androidx.compose.ui.text.TextStyle(
@@ -144,7 +143,6 @@ fun MainContent(
                 color = if (isAccessibilityServiceEnabled) Color(0xFF248067) else Color.Red
             )
         )
-        // 添加垂直间距
         Spacer(modifier = Modifier.height(16.dp))
         // 按钮文本样式
         val textStyle = androidx.compose.ui.text.TextStyle(
