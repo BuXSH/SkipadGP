@@ -30,21 +30,20 @@ import com.example.skipadgp.utils.NodePatternManager
  * 通过继承AccessibilityService实现自定义的无障碍服务功能
  */
 class AccessibilityService : AccessibilityService() {
-    private var lastProcessTime = 0L
-    private var appStartTime = 0L
-    private var isAppStarting = false
-    private var currentPackage: String? = null
-    private val STARTUP_MONITOR_DURATION = 5000L  // 启动监听持续5秒
-    private val PROCESS_INTERVAL = 200L           // 事件处理间隔200毫秒
+    private var lastProcessTime = 0L    // 记录上次处理事件的时间戳，用于控制事件处理频率
+    private var appStartTime = 0L       // 记录应用启动的时间戳，用于控制应用启动监听的持续时间
+    private var isAppStarting = false   // 标记应用是否正在启动
+    private var currentPackage: String? = null      // 记录当前应用的包名
+    private val STARTUP_MONITOR_DURATION = 5000L    // 启动监听持续5秒
+    private val PROCESS_INTERVAL = 200L             // 事件处理间隔200毫秒
     /**
      * 当服务连接成功时调用
      * 在这里配置无障碍服务的相关参数，如事件类型、反馈类型等
      */
     override fun onServiceConnected() {
         super.onServiceConnected()
-        // 加载节点特征数据
         Log.d("AccessibilityService", "开始加载节点特征数据...")
-        NodePatternManager.loadPatterns(this)
+        NodePatternManager.loadPatterns(this)   // 加载节点特征数据
         Log.d("AccessibilityService", "节点特征数据加载完成")
         val info = AccessibilityServiceInfo().apply {
             // 监听所有类型的无障碍事件
@@ -98,16 +97,32 @@ class AccessibilityService : AccessibilityService() {
                 AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                     val packageName = event.packageName?.toString()
                     // 在应用切换时进行白名单检查
-                    if (packageName != null && 
-                        packageName != currentPackage && 
-                        !WhitelistManager.getInstance(this).isPackageWhitelisted(packageName)) {
-                        isAppStarting = true
-                        appStartTime = System.currentTimeMillis()
-                        currentPackage = packageName
-                        Log.d("WindowEvent", "检测到新应用启动: $packageName")
+                    // if (packageName != null && 
+                    //     packageName != currentPackage && 
+                    //     !WhitelistManager.getInstance(this).isPackageWhitelisted(packageName)) {
+                    //     isAppStarting = true
+                    //     appStartTime = System.currentTimeMillis()
+                    //     currentPackage = packageName
+                    //     Log.d("WindowEvent", "检测到新应用启动: $packageName")
+                    // }
+                    if (packageName != null && packageName != currentPackage) {
+                        if (WhitelistManager.getInstance(this).isPackageWhitelisted(packageName)) {
+                            // 如果是白名单应用，重置所有状态
+                            isAppStarting = false
+                            currentPackage = null
+                            Log.d("WindowEvent", "检测到白名单应用: $packageName，跳过处理")
+                        } else {
+                            // 非白名单应用，开始监控
+                            isAppStarting = true
+                            appStartTime = System.currentTimeMillis()
+                            currentPackage = packageName
+                            Log.d("WindowEvent", "检测到新应用启动: $packageName")
+                        }
                     }
                 }
                 AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
+                    // 只有在isAppStarting为true时才处理内容变化事件
+                    if (!isAppStarting) return
                     val currentTime = System.currentTimeMillis()
                     val packageName = event.packageName?.toString()
                     
