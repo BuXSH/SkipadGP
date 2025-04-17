@@ -16,6 +16,8 @@ class WhitelistManager private constructor(context: Context) {
         PREF_NAME,
         Context.MODE_PRIVATE
     )
+    // 添加内存缓存
+    private var whitelistCache: Set<String>? = null
 
     companion object {
         private const val PREF_NAME = "whitelist_prefs"
@@ -40,7 +42,11 @@ class WhitelistManager private constructor(context: Context) {
      * @return 包名集合，为空时返回空集合
      */
     fun getWhitelistedPackages(): Set<String> {
+        // 优先使用缓存
+        whitelistCache?.let { return it }
         val whitelist = sharedPreferences.getStringSet(KEY_WHITELIST, emptySet()) ?: emptySet()
+        // 更新缓存
+        whitelistCache = whitelist.toSet()
         // 添加调试日志，输出当前白名单内容
         Log.d("WhitelistManager", "当前白名单列表:")
         whitelist.forEach { packageName ->
@@ -56,9 +62,14 @@ class WhitelistManager private constructor(context: Context) {
     fun addToWhitelist(packageName: String): Boolean {
         val currentSet = getWhitelistedPackages().toMutableSet()
         if (currentSet.add(packageName)) {
-            return sharedPreferences.edit()
+            val result = sharedPreferences.edit()
                 .putStringSet(KEY_WHITELIST, currentSet)
                 .commit()
+            if (result) {
+                // 更新缓存
+                whitelistCache = currentSet
+            }
+            return result
         }
         return false
     }
@@ -70,9 +81,14 @@ class WhitelistManager private constructor(context: Context) {
     fun removeFromWhitelist(packageName: String): Boolean {
         val currentSet = getWhitelistedPackages().toMutableSet()
         if (currentSet.remove(packageName)) {
-            return sharedPreferences.edit()
+            val result = sharedPreferences.edit()
                 .putStringSet(KEY_WHITELIST, currentSet)
                 .commit()
+            if (result) {
+                // 更新缓存
+                whitelistCache = currentSet
+            }
+            return result
         }
         return false
     }
@@ -89,9 +105,14 @@ class WhitelistManager private constructor(context: Context) {
      * @return 清空成功返回true，失败返回false
      */
     fun clearWhitelist(): Boolean {
-        return sharedPreferences.edit()
+        val result = sharedPreferences.edit()
             .remove(KEY_WHITELIST)
             .commit()
+        if (result) {
+            // 清空缓存
+            whitelistCache = emptySet()
+        }
+        return result
     }
 
     /**

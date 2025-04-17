@@ -34,13 +34,13 @@ import kotlinx.coroutines.withContext
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import com.example.skipadgp.utils.FileUtils
 import android.app.Activity
 import androidx.activity.result.contract.ActivityResultContracts
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
+import com.example.skipadgp.utils.NodePatternManager
 
 class WidgetInfoActivity : ComponentActivity() {
     private lateinit var importLauncher: ActivityResultLauncher<Intent>
@@ -222,8 +222,13 @@ fun WidgetInfoScreen(importLauncher: ActivityResultLauncher<Intent>) {
                                                     jsonObject.put(packageName, newArray)
                                                 }
                                                 
-                                                // 保存更新后的文件
-                                                file.writeText(jsonObject.toString(2))
+                                                // // 保存更新后的文件
+                                                // file.writeText(jsonObject.toString(2))
+                                                // // 重新加载节点特征数据到 NodePatternManager
+                                                // com.example.skipadgp.utils.NodePatternManager.loadPatterns(context)
+                                                
+                                                // 使用新的保存方法
+                                                NodePatternManager.saveAndReload(context, jsonObject)
                                                 break
                                             }
                                         }

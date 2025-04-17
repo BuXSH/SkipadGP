@@ -2,17 +2,9 @@ package com.example.skipadgp.service
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import org.json.JSONArray
-import org.json.JSONObject
 import android.graphics.Rect
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import android.view.accessibility.AccessibilityNodeInfo
 import android.content.BroadcastReceiver
 import android.content.Context

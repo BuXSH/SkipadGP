@@ -6,7 +6,6 @@ import android.util.Log                                    // 用于日志输出
 import android.view.accessibility.AccessibilityNodeInfo    // 无障碍节点信息类
 import java.util.regex.Pattern                            // 正则表达式模式类
 import android.content.Context                            // Android上下文类
-import com.example.skipadgp.utils.WhitelistManager        // 自定义的白名单管理器
 
 /**
  * 跳过按钮查找工具类

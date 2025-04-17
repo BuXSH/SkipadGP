@@ -9,20 +9,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import com.example.skipadgp.R
 import android.content.Context
 import android.util.Log
-import com.example.skipadgp.service.AccessibilityService
 import com.example.skipadgp.service.AccessibilityService.NodeInfo  // 添加 NodeInfo 的导入
 import android.content.BroadcastReceiver  // 添加 BroadcastReceiver 的导入
 import android.content.IntentFilter  // 添加 IntentFilter 的导入
 import android.os.IBinder
 import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.widget.FrameLayout
 import android.util.DisplayMetrics
-import android.widget.Toast  // 添加 Toast 导入
 import android.widget.TextView  // 添加 TextView 导入
 import com.example.skipadgp.utils.NodeSaveUtil
 

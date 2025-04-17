@@ -29,11 +29,9 @@ import android.util.Log
 import androidx.compose.ui.platform.LocalContext
 import com.example.skipadgp.utils.AccessibilityServiceManager
 import com.example.skipadgp.service.FloatingButtonService
-import com.example.skipadgp.ui.activities.WhitelistActivity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ModalBottomSheet

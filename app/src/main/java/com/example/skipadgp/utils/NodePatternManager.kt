@@ -69,6 +69,8 @@ object NodePatternManager {
         }
     }
 
+
+
     /**
      * 在当前界面查找匹配的节点
      * @param rootNode 当前界面的根节点
@@ -110,4 +112,14 @@ object NodePatternManager {
 
         return null
     }
+
+    /**
+     * 保存 JSON 数据并自动重新加载节点特征
+     */
+    fun saveAndReload(context: Context, jsonObject: JSONObject) {
+        val file = File(context.getExternalFilesDir(null), PATTERN_FILE)
+        file.writeText(jsonObject.toString(2))
+        loadPatterns(context)
+    }
+
 }

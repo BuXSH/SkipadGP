@@ -5,7 +5,6 @@ import android.accessibilityservice.AccessibilityService
 import android.graphics.Path
 import android.graphics.Point
 import android.util.Log
-import android.view.accessibility.AccessibilityNodeInfo
 
 /**
  * 屏幕点击辅助类

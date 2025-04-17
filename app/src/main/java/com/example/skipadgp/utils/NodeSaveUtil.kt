@@ -39,10 +39,15 @@ object NodeSaveUtil {
             }
             // 添加新节点数据到对应包名的数组中
             packageNodes.put(nodeJson)
-            // 保存到文件，使用缩进格式化
-            file.writeText(patternsJson.toString(2))
-            
-            Log.d("NodeSaveUtil", "节点信息已保存到文件: ${file.absolutePath}")
+
+            // 使用新的保存方法
+            NodePatternManager.saveAndReload(context, patternsJson)
+
+            // // 保存到文件，使用缩进格式化
+            // file.writeText(patternsJson.toString(2))
+            // Log.d("NodeSaveUtil", "节点信息已保存到文件: ${file.absolutePath}")
+            // // 保存成功后，重新加载所有节点特征数据
+            // NodePatternManager.loadPatterns(context)
             true
         } catch (e: Exception) {
             Log.e("NodeSaveUtil", "保存节点信息失败", e)
